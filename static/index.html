@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--
+        - Copyright 2015 Martin Lehner - Hes-so Valais / Wallis
+        -
+        - This file is part of StreamSDR
+        -
+        - StreamSDR is free software; you can redistribute it and/or modify
+        - it under the terms of the GNU General Public License as published by
+        - the Free Software Foundation; either version 3, or (at your option)
+        - any later version.
+        -
+        - StreamSDR is distributed in the hope that it will be useful,
+        - but WITHOUT ANY WARRANTY; without even the implied warranty of
+        - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        - GNU General Public License for more details.
+        -
+        - You should have received a copy of the GNU General Public License
+        - along with StreamSDR. If not, see <http://www.gnu.org/licenses/>.
+        -->
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>IPA 2015 - SDR</title>
+
+        <link id="favicon" rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+
+        <!--link href='http://fonts.googleapis.com/css?family=Questrial|Play' rel='stylesheet' type='text/css'-->
+        <link rel="stylesheet" type="text/css" href="css/googleFonts.css">
+        <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+
+        <script type="text/javascript">
+            var wsUri = "{{ wsUrl }}";
+            var streamUri = "{{ streamUrl }}";
+        </script>
+        <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/audioPlayer.js"></script>
+        <script type="text/javascript" src="js/tuner.js"></script>
+        <script type="text/javascript" src="js/javascript.js"></script>
+    </head>
+    <body>
+        <div id="wrapper" class="noOperator">
+
+            <div id="head">
+
+                <div id="sender">
+                    <div id="senderBox">
+                        <div id="frequencyBox">
+                            <input type="text" id="frequency" value="92 MHz" onkeyup="frequencyEntered(this.value, event)" onblur="frequencyEntered(this.value, event)" onfocus="insertFrequency(this)" disabled>
+                        </div><!-- frequencyBox -->
+                        <div id="favoriteBox">
+                            <img src="img/emptyHeart.png" id="saveFavorite" onclick="addFavorite()" width="30" height="30" alt="Add Favorite">
+                        </div><!-- favoriteBox -->
+                    </div><!-- senderBox -->
+                </div><!-- sender -->
+
+                <table id="statusTable">
+                    <tr>
+                        <td id="connectionImg">
+                            <img src="img/reconnect.png" id="reconnectImg" width="20" height="20" alt="Reconnect" onclick="reconnect()">
+                            <img src="img/connected.png" id="connectedImg" width="20" height="20" alt="Connected" style="display: none;">
+                        </td>
+                        <td id="status">Not connected</td>
+                        <td id="zoomImages">
+                            <img src="img/zoomOut.png" id="zoomOut" width="20" height="20" alt="Zoom out" onclick="tuner.zoomOut()">
+                            <img src="img/zoomIn.png" id="zoomIn" width="20" height="20" alt="Zoom in" onclick="tuner.zoomIn()">
+                        </td>
+                    </tr>
+                </table>
+
+            </div><!-- head -->
+
+            <div id="content">
+
+                <div id="loadingBar">
+                    <div id="progress"></div>
+                </div><!-- loadingBar -->
+
+                <canvas id="tuner" width="400" height="80" style="cursor: pointer; position: relative;"></canvas>
+
+                <table id="demodulationTable">
+                    <tr>
+                        <td id="am" class="demoudulationField" onclick="setDemodulation('am')">AM</td>
+                        <!--td style="width: 4px;"></td-->
+                        <td id="fm" class="demoudulationField selected" onclick="setDemodulation('fm')">FM</td>
+                    </tr>
+                </table>
+
+                <div id="controls">
+                    <div class="buttonBox">
+                        <img src='img/play.png' width="25" height="25" id="play" class="imgButton" onclick="audioPlayer.playStream()" alt="Start">
+                        <input type="button" id="live" value="Live" onclick="audioPlayer.playLive()">
+                        <img src='img/stop.png' width="25" height="25" id="stop" class="imgButton" onclick="audioPlayer.stopStream()" alt="Stop">
+                    </div><!-- buttonBox -->
+                    <div class="buttonBox">
+                        <img src='img/mute.png' width="25" height="25" id="mute" class="imgButton" onclick="audioPlayer.mute()" alt="Mute" style="display: none;">
+                        <input type="range" id="volume" min="0" max="100" value="80" onchange="audioPlayer.setVolumePercent(this.value)" style="display: none;">
+                    </div><!-- buttonBox -->
+                    <audio id="audioStream" preload="none" src="{{ streamUrl }}"></audio>
+                    <br>
+                    <br>
+                    <img src="img/favorite.png" width="20" height="20" id="favoriteTitleImg">
+                    <h2 id="favoriteTitle">Favorites</h2>
+                    <table id="favoriteTable">
+                        <thead><td colspan="4"></td></thead>
+                        <tbody></tbody>
+                    </table>
+                </div><!-- controls -->
+
+            </div><!-- content -->
+
+        </div><!-- wrapper -->
+    </body>
+</html>

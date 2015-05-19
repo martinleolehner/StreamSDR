@@ -1,0 +1,42 @@
+# StreamSDR - A GNURadio application which can receive AM or FM signals
+# and stream the received audio to a web interface.
+#
+# Copyright 2015 Martin Lehner - Hes-so Valais / Wallis
+#
+# StreamSDR is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# StreamSDR is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with StreamSDR. If not, see <http://www.gnu.org/licenses/>.
+
+
+Dependencies
+------------
+GNURadio, osmosdr, gr-streamsink, Tornado Web Server and pypubsub must
+be installed.
+
+http://gnuradio.org/
+http://sdr.osmocom.org/trac/wiki/rtl-sdr
+https://github.com/martinleolehner/gr-streamsink
+http://www.tornadoweb.org/en/stable/
+http://pubsub.sourceforge.net/
+
+
+Usage
+-----
+You must have a SHOUTcast or Icecast server running.
+Modify the config file (streamsdr.conf) to fit to the settings of the
+streaming server.
+
+Then execute the main.py script
+  $ python main.py
+
+If the webserver port in streamsdr.conf is set to 80 or your rtl-sdr
+device requires root privileges you must run the command as root.

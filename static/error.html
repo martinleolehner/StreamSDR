@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--
+        - Copyright 2015 Martin Lehner - Hes-so Valais / Wallis
+        -
+        - This file is part of StreamSDR
+        -
+        - StreamSDR is free software; you can redistribute it and/or modify
+        - it under the terms of the GNU General Public License as published by
+        - the Free Software Foundation; either version 3, or (at your option)
+        - any later version.
+        -
+        - StreamSDR is distributed in the hope that it will be useful,
+        - but WITHOUT ANY WARRANTY; without even the implied warranty of
+        - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        - GNU General Public License for more details.
+        -
+        - You should have received a copy of the GNU General Public License
+        - along with StreamSDR. If not, see <http://www.gnu.org/licenses/>.
+        -->
+
+        <title>{{ title }} - IPA 2015 - SDR</title>
+
+        <link rel="icon" type="image/vnd.microsoft.icon" href="favicon_error.ico">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--link href='http://fonts.googleapis.com/css?family=Questrial|Play' rel='stylesheet' type='text/css'-->
+        <link rel="stylesheet" type="text/css" href="css/googleFonts.css">
+        <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+                <div id="errorContent">
+                    <h1 id="errorCode">{{ errorCode }}</h1>
+                    <h2>{{ title }}</h2>
+                    <br>
+                    <div>
+                        {{ errorMessage }}
+                        <br>
+                        <br>
+                        Return to the <a href="index.html">index page</a>.
+                    </div>
+                </div><!-- controls -->
+            </div><!-- content -->
+        </div><!-- wrapper -->
+    </body>
+</html>

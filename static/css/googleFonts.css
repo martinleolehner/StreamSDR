@@ -1,0 +1,44 @@
+/*
+* Copyright 2015 Martin Lehner - Hes-so Valais / Wallis
+*
+* This file is part of StreamSDR
+*
+* StreamSDR is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 3, or (at your option)
+* any later version.
+*
+* StreamSDR is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with StreamSDR. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+|   IPA 2015 - SDR
+|   Hes-so Valais/Wallis
+|
+|   googleFonts.css - Serves the google fonts from the own server
+|   Created by Martin Lehner
+*/
+
+/* latin */
+@font-face {
+  font-family: 'Play';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../googleFonts/Play.woff2) format('woff2'), url(../googleFonts/Play.woff) format('woff');
+  /*unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;*/
+}
+
+/* latin */
+@font-face {
+  font-family: 'Questrial';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../googleFonts/Questrial.woff2) format('woff2'), url(../googleFonts/Questrial.woff) format('woff');
+  /*unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;*/
+}

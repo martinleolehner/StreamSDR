@@ -1,0 +1,428 @@
+/*
+* Copyright 2015 Martin Lehner - Hes-so Valais / Wallis
+*
+* This file is part of StreamSDR
+*
+* StreamSDR is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 3, or (at your option)
+* any later version.
+*
+* StreamSDR is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with StreamSDR. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+* Color Theme
+* adobe.ly/1pr0RGX
+* https://color.adobe.com/de/Fresh-UI-color-theme-4023111/
+*/
+
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow-y: scroll;
+    background-color: #121A1C;
+    font-family: Questrial;
+    font-size: 14px;
+    color: #bbbbbb;
+}
+
+
+h1 {
+    text-align: center;
+    margin: 10px 0 20px 0;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+h2 {
+    margin: 10px 0 0 0;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #D3F578;
+}
+
+a:active {
+    color: #9EB85A;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+input {
+    -webkit-appearance: none;
+    vertical-align: top;
+    font-size: 12px;
+}
+
+input:focus {
+    outline: none;
+}
+
+input[type=button], .imgButton {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 25px;
+    margin: 0 4px 4px 0;
+    padding: 2px;
+    border: 0;
+    background: none;
+    color: #D3F578;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+input[type=text] {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #ffffff;
+    background: none;
+    color: #ffffff;
+    font-family: Questrial;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    display: inline-block;
+    height: 3px;
+    margin: 10px 4px 4px 0;
+    padding: 0;
+    border: 1px solid #121A1C;
+    border-radius: 2px;
+    background: #D3F578;
+    color: #121A1C;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #9EB85A;
+    border-radius:7px;
+    background-color: #D3F578;
+}
+
+input[type=range]::-moz-range-thumb-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #9EB85A;
+    border-radius:7px;
+    background-color: #D3F578;
+}
+
+input[type=range]::-ms-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #9EB85A;
+    border-radius:7px;
+    background-color: #D3F578;
+}
+
+#wrapper {
+    width: 95%;
+    min-width: 300px;
+    max-width: 600px;
+    margin: 20px auto 50px auto;
+}
+
+    #head {
+
+    }
+
+        #sender {
+            width: 100%;
+            height: 70px;
+        }
+
+            #senderBox {
+                position: relative;
+            }
+
+                #frequencyBox {
+                    display: inline-block;
+                    position: absolute;
+                    top: 0px;
+                    left: 80px;
+                    right: 80px;
+                }
+
+                    #frequency {
+                        width: 100%;
+                        padding: 0px;
+                        border: 0;
+                        font-size: 48px;
+                        text-align: center;
+                        cursor: text;
+                        background-color: #121A1C;
+                        color: #ffffff;
+                        font-family: Play;
+                        /*background-color: #ffff00;*/
+                        text-overflow: ellipsis;
+                    }
+
+                    #frequency:disabled {
+                        color: #bbbbbb;
+                    }
+
+                #favoriteBox {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 80px;
+                    padding: 0;
+                    text-align: center;
+                }
+
+                    #saveFavorite {
+                        cursor: pointer;
+                    }
+
+                    .currentFavorite {
+                        width: 76px;
+                        padding: 2px;
+                        border: 0;
+                        text-align: center;
+                        background-color: #121A1C;
+                        color: #ffffff;
+                    }
+
+
+        #statusTable {
+            width: 100%;
+        }
+
+            #statusTable td {
+                vertical-align: top;
+            }
+
+            #connectionImg {
+                width: 20px;
+            }
+
+                #connectionImg img {
+                    cursor: pointer;
+                }
+
+
+            #status {
+                text-align: center;
+                padding-left: 26px;
+            }
+
+            #zoomImages {
+                width: 46px;
+                vertical-align: bottom !important;
+                text-align: right;
+            }
+
+                #zoomImages img {
+                    padding: 0;
+                    margin: 0;
+                    cursor: pointer;
+                }
+
+                #zoomImages img.endZoom {
+                    opacity: 0.4;
+                    cursor: default;
+                }
+
+
+        #tunerTable {
+            width: 100%;
+        }
+
+            #tunerStatus {
+
+            }
+
+            #zoomLabel {
+                width: 60px;
+                text-align: right;
+            }
+
+            #zoom {
+                width: 100px;
+            }
+
+
+    #content {
+        margin-top: 4px;
+        padding: 0 0 20px 0;
+        border-radius: 2px;
+        background-color: #16272B;
+    }
+
+        #loadingBar {
+            width: 100%;
+            height: 4px;
+        }
+
+            #progress {
+                width: 0;
+                height: inherit;
+                background-color: #D3F578;
+                border-top-left-radius: 2px;
+            }
+
+
+        #tuner {
+            height: 80px;
+            margin: 0;
+            border-top: 1px solid #121A1C;
+            border-bottom: 1px solid #121A1C;
+        }
+
+
+        #demodulationTable {
+            width: 100%;
+            margin-top: -4px;
+            border-collapse: collapse;
+        }
+
+            #demodulationTable tr{
+                padding: 0;
+            }
+
+                .demoudulationField {
+                    text-align: center;
+                    vertical-align: top;
+                    margin: 0;
+                    padding: 4px;
+                    border-top: 1px solid #121A1C;
+                    border-bottom: 1px solid #121A1C;
+                    background-color: #16272B;
+                    /*background: -webkit-linear-gradient(#1A454D, #121A1C);
+                    background: -o-linear-gradient(#1A454D, #121A1C);
+                    background: -moz-linear-gradient(#1A454D, #121A1C);
+                    background: linear-gradient(#1A454D, #121A1C);*/
+                    color: #D3F578;
+                    font-size: 14px;
+                    cursor: pointer;
+                }
+
+                .noOperator #demodulationTable .demoudulationField {
+                    cursor: default !important;
+                }
+
+                .demoudulationField:hover {
+                    background-color: #1A454D;
+                    background-color: #192E33;
+                }
+
+                .noOperator #demodulationTable .demoudulationField:hover {
+                    background-color: #16272B;
+                    /*background: -webkit-linear-gradient(#1A454D, #121A1C);
+                    background: -o-linear-gradient(#1A454D, #121A1C);
+                    background: -moz-linear-gradient(#1A454D, #121A1C);
+                    background: linear-gradient(#1A454D, #121A1C);*/
+                }
+
+                .demoudulationField.selected {
+                    background-color: #121A1C;
+                    background-color: #122024;
+                    /*background: -webkit-linear-gradient(#121A1C, #16272B);
+                    background: -o-linear-gradient(#121A1C, #16272B);
+                    background: -moz-linear-gradient(#121A1C, #16272B);
+                    background: linear-gradient(#121A1C, #16272B);*/
+                    cursor: default;
+                }
+
+
+        #controls {
+            padding: 8px;
+        }
+
+            .buttonBox {
+                display: inline-block;
+            }
+
+
+            #favoriteTitleImg {
+                vertical-align: top;
+            }
+
+            #favoriteTitle {
+                display: inline-block;
+                vertical-align: top;
+                margin: 3px 0 8px 4px;
+            }
+
+            #favoriteTable {
+                color: #ffffff;
+            }
+
+                #favoriteTable thead td {
+                    font-size: 14px;
+                    color: #bbbbbb;
+                    padding-bottom: 6px;
+                }
+
+                #favoriteTable tbody tr {
+                    cursor: pointer;
+                }
+
+                .noOperator #favoriteTable tbody tr {
+                    cursor: default;
+                }
+
+                    #favoriteTable tbody td {
+                        text-align: left;
+                        padding-right: 6px;
+                        height: 25px;
+                    }
+
+                        #favoriteTable input[type=text] {
+                            width: 100px;
+                        }
+
+                        #favoriteTable img {
+                            margin-right: 6px;
+                            cursor: pointer;
+                        }
+
+                        #favoriteTable .removeImg {
+                            opacity: 1 !important;
+                            cursor: pointer !important;
+                        }
+
+                        .noOperator #favoriteTable img {
+                            opacity: 0.4;
+                            cursor: default;
+                        }
+
+
+        #errorContent {
+            padding: 8px;
+            text-align: center;
+        }
+
+            #errorCode {
+                color: #FF4E50;
+                font-size: 96px;
+            }

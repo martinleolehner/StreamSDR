@@ -21,9 +21,7 @@
 ## @package main
 #  The main module controls the radio and the server modules.
 
-#from optparse import OptionParser
-#from gnuradio import eng_notation
-#from gnuradio.eng_option import eng_option
+from optparse import OptionParser
 import signal
 import time
 import os
@@ -40,11 +38,11 @@ from radio import Radio
 class Controller:
     terminate = False
 
-    def __init__(self):
+    def __init__(self, config_file):
 
-        config_file = os.path.dirname(os.path.realpath(__file__))+"/streamsdr.conf"
+        if config_file == "": config_file = os.path.dirname(os.path.realpath(__file__))+"/streamsdr.conf"
         if not os.path.isfile(config_file):
-            print "Error: Could not find the configuration file " + config_file + "\nPlease create this file."
+            print "Error: Could not find configuration file " + config_file
             sys.exit(0)
 
         config = ConfigParser.RawConfigParser()
@@ -89,7 +87,14 @@ class Controller:
 
 
 if __name__ == '__main__':
-    #parser = OptionParser(option_class=eng_option, usage="%prog: [options]")
-    #(options, args) = parser.parse_args()
+    usage = """Usage: %prog [conf]
+  [conf]      Configuration file.
+              If not specified, streamsdr.conf in the same directory will be used."""
 
-    controller = Controller()
+    parser = OptionParser(usage=usage)
+    (options, args) = parser.parse_args()
+
+    config_file = ""
+    if len(args) > 0: config_file = args[0]
+
+    controller = Controller(config_file)

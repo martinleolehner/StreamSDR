@@ -97,10 +97,10 @@ function connected(isConnected)
         $("#connectedImg").hide();
         $("#reconnectImg").show();
 
+        operator = false;
         $("#wrapper").addClass("noOperator");
         $("#frequency").prop("disabled", true);
-        //tuner.disable();
-
+        tuner.disable();
     }
 }
 
@@ -503,7 +503,7 @@ function renameFavorite(id, name, e)
             }
             else if(e.type == "blur" || (e.keyCode? e.keyCode : e.charCode) == 13)
             {
-                if(name == favorites[id]["name"]) return;
+                if(name == favorites[i]["name"]) return;
 
                 if(name == "")
                 {

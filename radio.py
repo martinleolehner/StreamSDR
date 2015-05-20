@@ -132,9 +132,11 @@ class Radio(gr.top_block):
     def set_frequency(self, frequency):
         if not isinstance(frequency, int) and not isinstance(frequency, float): return
 
-        print "Set frequnency to: " + str(frequency)
-        self.frequency = frequency
-        self.rtlsdr_source.set_center_freq(self.frequency, 0)
+        if frequency != self.frequency:
+            print "Set frequnency to: " + str(frequency)
+            self.frequency = frequency
+            self.rtlsdr_source.set_center_freq(self.frequency, 0)
+
         self.get_frequency()
 
     ## Sends the pubsub message current_frequency and passes the current frequency

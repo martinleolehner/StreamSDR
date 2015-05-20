@@ -27,7 +27,8 @@ var tuner = {
     pixelRatio: 1,
     zoom: 4,
     dragging: false,
-    dragStart: null,
+    dragStartX: null,
+    dragStartY: null,
     lastDragPos: null,
     lastDragTime: null,
     speed: 0,
@@ -61,21 +62,26 @@ var tuner = {
 
         this.canvas.addEventListener("mouseout", function(e) {
             if(!tuner.enabled) return;
-            //if(!tuner.dragging || !tuner.dragStart) return;
+            //if(!tuner.dragging || !tuner.dragStartX) return;
             tuner.dragging = false;
-            tuner.dragStart = null;
+            tuner.dragStartX = null;
+            tuner.dragStartY = null;
             tuner.favoriteHovered = -1;
 
-            tuner.currentFrequency = currentFrequency;
-            tuner.draw(tuner.currentFrequency);
-            $("#frequency").val((tuner.currentFrequency/1e6) + " MHz");
+            if(tuner.timeout == null && !tuner.speed)
+            {
+                tuner.currentFrequency = currentFrequency;
+                tuner.draw(tuner.currentFrequency);
+                $("#frequency").val((tuner.currentFrequency/1e6) + " MHz");
+            }
         });
 
         this.canvas.addEventListener("touchcancel", function(e) {
             if(!tuner.enabled) return;
-            if(!tuner.dragging || !tuner.dragStart) return;
+            if(!tuner.dragging || !tuner.dragStartX) return;
             tuner.dragging = false;
-            tuner.dragStart = null;
+            tuner.dragStartX = null;
+            tuner.dragStartY = null;
 
             tuner.draw(tuner.currentFrequency);
             $("#frequency").val((tuner.currentFrequency/1e6) + " MHz");
@@ -112,7 +118,8 @@ var tuner = {
     {
         this.enabled = true;
         this.dragging = false;
-        this.dragStart = null;
+        this.dragStartX = null;
+        this.dragStartY = null;
         this.draw(this.currentFrequency);
     },
 
@@ -120,7 +127,8 @@ var tuner = {
     {
         this.enabled = false;
         this.dragging = false;
-        this.dragStart = null;
+        this.dragStartX = null;
+        this.dragStartY = null;
         this.draw(this.currentFrequency);
     },
 
@@ -170,6 +178,8 @@ var tuner = {
 
     moveStart: function(e)
     {
+        this.moved = false;
+
         this.ctx.moveTo(0, 0);
         var x = 0;
         var y = 0;
@@ -184,26 +194,9 @@ var tuner = {
             y = (e.layerY)? e.layerY : e.offsetY;
         }
 
-        // The click/touch is on a favorite
-        if(y <= 35)
-        {
-            if(!favorites) return;
-
-            // The area of a favorite is about 40px wide
-            var minFq = this.currentFrequency + (x - Math.round(this.canvas.width/2) - 20)*this.hertzPerPixel;
-            var maxFq = this.currentFrequency + (x - Math.round(this.canvas.width/2) + 20)*this.hertzPerPixel;
-            for(var i=0; i<favorites.length; i++)
-            {
-                if(favorites[i]["frequency"] >= minFq && favorites[i]["frequency"] <= maxFq)
-                {
-                    if(typeof playFavorite == "function") playFavorite(favorites[i]["id"]);
-                    return;
-                }
-            }
-        }
-
         this.dragging = true;
-        this.dragStart = x;
+        this.dragStartX = x;
+        this.dragStartY = y;
 
         this.lastDragPos = null;
         this.lastDragTime = null;
@@ -220,7 +213,6 @@ var tuner = {
             clearTimeout(this.timeout);
             this.timeout = null;
         }
-
     },
 
     move: function(e)
@@ -238,9 +230,9 @@ var tuner = {
             y = (e.layerY)? e.layerY : e.offsetY;
         }
 
-        if(!this.dragging || !this.dragStart)
+        // Chech if the mouse is hovering in the favorites area
+        if(!this.dragging || !this.dragStartX)
         {
-          // The mouse is on a favorite
           if(y <= 35)
           {
               if(!favorites) return;
@@ -289,7 +281,9 @@ var tuner = {
         this.lastDragPos = x;
         this.lastDragTime = currentTime;
 
-        var diff = x - this.dragStart;
+        var diff = x - this.dragStartX;
+        if(Math.abs(diff) > 0 || Math.abs(y - this.dragStartY) > 0) this.moved = true;
+
         var frequency = Math.round((this.currentFrequency - diff*this.hertzPerPixel)/this.hertzPerPixel)*this.hertzPerPixel;
         if(frequency <= MIN_FREQ) frequency = MIN_FREQ;
         else if(frequency >= MAX_FREQ) frequency = MAX_FREQ;
@@ -300,7 +294,7 @@ var tuner = {
 
     moveEnd: function(e)
     {
-        if(!this.dragging || !this.dragStart) return;
+        if(!this.dragging || !this.dragStartX) return;
 
         if(this.timeout) clearTimeout(this.timeout);
         this.timeout = null;
@@ -315,8 +309,30 @@ var tuner = {
             x = (e.layerX)? e.layerX : e.offsetX;
         }
 
-        var diff = x - this.dragStart;
-        if(diff != 0)
+        var diff = x - this.dragStartX;
+        if(Math.abs(diff) > 0) this.moved = true;
+
+        // If the cursor was not moving and the click is in the favorites area, check if a favorite was clicked
+        if(!this.moved)
+        {
+          if(this.dragStartY <= 35)
+          {
+              if(!favorites) return;
+
+              // The area of a favorite is about 40px wide
+              var minFq = this.currentFrequency + (x - Math.round(this.canvas.width/2) - 20)*this.hertzPerPixel;
+              var maxFq = this.currentFrequency + (x - Math.round(this.canvas.width/2) + 20)*this.hertzPerPixel;
+              for(var i=0; i<favorites.length; i++)
+              {
+                  if(favorites[i]["frequency"] >= minFq && favorites[i]["frequency"] <= maxFq)
+                  {
+                      if(typeof playFavorite == "function") playFavorite(favorites[i]["id"]);
+                      break;
+                  }
+              }
+          }
+        }
+        else if(diff != 0)
         {
             var frequency = Math.round((this.currentFrequency - diff*this.hertzPerPixel)/this.hertzPerPixel)*this.hertzPerPixel;
             if(frequency <= MIN_FREQ) frequency = MIN_FREQ;
@@ -343,7 +359,8 @@ var tuner = {
         }
 
         this.dragging = false;
-        this.dragStart = null;
+        this.dragStartX = null;
+        this.dragStartY = null;
         this.lastDragPos = null;
         this.lastDragTime = null;
     },
@@ -404,6 +421,9 @@ var tuner = {
     {
         setFrequency(tuner.currentFrequency);
         $("#frequency").val((tuner.currentFrequency/1e6) + " MHz");
+
+        clearTimeout(tuner.timeout);
+        tuner.timeout = null;
     },
 
     draw: function(frequency)

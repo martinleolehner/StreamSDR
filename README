@@ -35,8 +35,8 @@ You must have a SHOUTcast or Icecast server running.
 Modify the config file (streamsdr.conf) to fit to the settings of the
 streaming server.
 
-Then execute the main.py script
-  $ python main.py
+Then execute the streamsdr script
+  $ ./streamsdr
 
 If the webserver port in streamsdr.conf is set to 80 or your rtl-sdr
 device requires root privileges you must run the command as root.
